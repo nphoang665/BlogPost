@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="mt-5">
+        <div class="col-12 col-md-6 col-lg-4 mx-auto">
+            <h1>Đăng ký</h1>
+
+            <form [formGroup]="form" (submit)="onFormSubmit()">
+                <div class="mt-3">
+                    <label for="email" class="form-label">Email</label>
+                    <!-- <input type="text" class="form-control" id="email" name="email"  [(ngModel)]="model.email"> -->
+                    <input type="text" formControlName="email" class="form-control"
+                        [ngClass]="{ 'is-invalid': (submitted || f['email'].touched ||f['email'].dirty) && f['email'].errors }"
+                        (blur)="onFieldTouched('email')" [(ngModel)]="model.email" />
+                    @if ((submitted || f['email'].touched ||f['email'].dirty) && f['email'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['email'].errors['required']) {
+                        <div>Email là bắt buộc</div>
+                        }
+                        @if (f['email'].errors['email']) {
+                        <div>Email không đúng định dạng</div>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="mt-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <!-- <input type="password" class="form-control" id="password" name="password" [(ngModel)]="model.password"> -->
+                    <input type="password" formControlName="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': (submitted || f['password'].touched ||f['password'].dirty) && f['password'].errors }"
+                        (blur)="onFieldTouched('password')" [(ngModel)]="model.password"/>
+                    @if ((submitted || f['password'].touched ||f['password'].dirty) && f['password'].errors) {
+                    <div class="invalid-feedback">
+                        @if (f['password'].errors['required']) {
+                        <div>Mật khẩu là bắt buộc</div>
+                        }
+                        @if (f['password'].errors['minlength']) {
+                        <div>Mật khẩu không được ít hơn 6 ký tự</div>
+                        }
+                        @if (f['password'].errors['maxlength']) {
+                        <div>Mật khẩu không được lớn hơn 40 ký tự</div>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="mt-3">
+                    <label for="password" class="form-label">Nhập lại mật khẩu</label>
+                    
+                    <input type="password" class="form-control" formControlName="confirmPassword"
+                        [(ngModel)]="model.confirmPassword"  
+                        [ngClass]="{ 'is-invalid': (submitted || f['confirmPassword'].touched ||f['confirmPassword'].dirty) && f['confirmPassword'].errors }"
+                        (blur)="onFieldTouched('confirmPassword')" [(ngModel)]="model.confirmPassword"/>
+                        @if ((submitted || f['confirmPassword'].touched ||f['confirmPassword'].dirty) && f['confirmPassword'].errors) {
+                            <div class="invalid-feedback">
+                              @if (f['confirmPassword'].errors['required']) {
+                              <div>Xác nhận mật khẩu là bắt buộc</div>
+                              }
+                              @if (f['confirmPassword'].errors['matching']) {
+                              <div>Xác nhận mật khẩu không khớp</div>
+                              }
+                            </div>
+                            }
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Đăng ký</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

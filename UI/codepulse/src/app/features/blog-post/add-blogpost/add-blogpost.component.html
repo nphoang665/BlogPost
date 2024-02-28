@@ -1,0 +1,200 @@
+<div class="container">
+    <h1 class="mt-3">Thêm bài đăng</h1>
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+        <div class="mt-2 mb-5">
+            <div class="mt-3">
+                <label for="title" class="form-label">Tiêu đề</label>
+                <!-- <input type="text" id="title" name="title" class="form-control" [(ngModel)]="model.title"> -->
+
+                <input type="text" class="form-control" formControlName="title"
+                    [ngClass]="{ 'is-invalid': (submitted || f['title'].touched ||f['title'].dirty) && f['title'].errors }"
+                    (blur)="onFieldTouched('title')" [(ngModel)]="model.title">
+
+                @if ((submitted || f['title'].touched ||f['title'].dirty) && f['title'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['title'].errors['required']) {
+                    <div>Tiêu đề là bắt buộc</div>
+                    }
+                    @if (f['title'].errors['minlength']) {
+                    <div>Tiêu đề không được bé hơn 6 ký tự</div>
+                    }
+                    @if (f['title'].errors['maxlength']) {
+                    <div>Tiêu đề không được lớn hơn 100 ký tự</div>
+                    }
+                </div>
+                }
+            </div>
+
+            <div class="mt-3">
+                <label for="urlHandle" class="form-label">Url Handle</label>
+                <!-- <input type="text" id="urlHandle" name="urlHandle" class="form-control" [(ngModel)]="model.urlHandle"> -->
+
+                <input type="text" class="form-control" formControlName="urlHandle"
+                    [ngClass]="{ 'is-invalid': (submitted || f['urlHandle'].touched ||f['urlHandle'].dirty) && f['urlHandle'].errors }"
+                    (blur)="onFieldTouched('urlHandle')" [(ngModel)]="model.urlHandle">
+
+                @if ((submitted || f['urlHandle'].touched ||f['urlHandle'].dirty) && f['urlHandle'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['urlHandle'].errors['required']) {
+                    <div>Url Handle là bắt buộc</div>
+                    }
+                    @if (f['urlHandle'].errors['minlength']) {
+                    <div>Url Handle không được bé hơn 5 ký tự</div>
+                    }
+                    @if (f['urlHandle'].errors['maxlength']) {
+                    <div>Url Handle không được lớn hơn 50 ký tự</div>
+                    }
+                </div>
+                }
+            </div>
+
+            <div class="mt-3">
+                <label for="shortDescription" class="form-label">Mô tả ngắn</label>
+                <!-- <input type="text" id="shortDescription" name="shortDescription" class="form-control"
+                    [(ngModel)]="model.shortDescription"> -->
+
+                <input type="text" class="form-control" formControlName="shortDescription"
+                    [ngClass]="{ 'is-invalid': (submitted || f['shortDescription'].touched ||f['shortDescription'].dirty) && f['shortDescription'].errors }"
+                    (blur)="onFieldTouched('shortDescription')" [(ngModel)]="model.shortDescription">
+
+                @if ((submitted || f['shortDescription'].touched ||f['shortDescription'].dirty) &&
+                f['shortDescription'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['shortDescription'].errors['required']) {
+                    <div>Mô tả ngắn là bắt buộc</div>
+                    }
+                    @if (f['shortDescription'].errors['minlength']) {
+                    <div>Mô tả ngắn không được bé hơn 6 ký tự</div>
+                    }
+                </div>
+                }
+            </div>
+
+            <div class="mt-3">
+                <label for="content" class="form-label">Nội dung</label>
+                <div class="d-flex flex-row">
+                    <div class="col-6 p-2">
+                        <!-- <textarea id="content" name="content" class="form-control"
+                            style="height: 350px; max-height: 350px;" [(ngModel)]="model.content">
+                    </textarea> -->
+
+                        <textarea type="text" class="form-control" formControlName="content"
+                            [ngClass]="{ 'is-invalid': (submitted || f['content'].touched ||f['content'].dirty) && f['content'].errors }"
+                            (blur)="onFieldTouched('content')" style="height: 350px; max-height: 350px;"
+                            [(ngModel)]="model.content"></textarea>
+
+                        @if ((submitted || f['content'].touched ||f['content'].dirty) &&
+                        f['content'].errors) {
+                        <div class="invalid-feedback">
+                            @if (f['content'].errors['required']) {
+                            <div>Nội dung là bắt buộc</div>
+                            }
+                            @if (f['content'].errors['minlength']) {
+                            <div>Nội dung không được bé hơn 20 ký tự</div>
+                            }
+                        </div>
+                        }
+
+                    </div>
+
+                    <div class="col-6 p-2" style="max-height: 350px; overflow-y: scroll;">
+                        <markdown [data]="model.content"></markdown>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label for="featuredImageUrl" class="form-label">Hình ảnh nổi bật
+                    <button type="button" class="btn btn-light" (click)="openImageSelector()">Chọn hình ảnh</button>
+                </label>
+
+                <ng-container *ngIf="model.featuredImageUrl !== ''">
+                    <div>
+                        <img [src]="model.featuredImageUrl" height="100" class="my-2">
+                    </div>
+                </ng-container>
+
+                <input type="text" id="featuredImageUrl" formControlName="featuredImageUrl" class="form-control"
+                    [(ngModel)]="model.featuredImageUrl"
+                    [ngClass]="{ 'is-invalid': (submitted || f['featuredImageUrl'].touched ||f['featuredImageUrl'].dirty) && f['featuredImageUrl'].errors }"
+                    (blur)="onFieldTouched('featuredImageUrl')" [(ngModel)]="model.featuredImageUrl">
+                @if ((submitted || f['featuredImageUrl'].touched ||f['featuredImageUrl'].dirty) && f['featuredImageUrl'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['featuredImageUrl'].errors['required']) {
+                    <div>Hình ảnh nổi bật là bắt buộc</div>
+                    }
+                </div>
+                }
+
+            </div>
+            <div class="mt-3">
+                <label hidden for="publishedDate" class="form-label">Ngày xuất bản</label>
+                <input type="date" id="publishedDate" formControlName="publishedDate" class="form-control"
+                    value="{{model.publishedDate}}" [ngModel]="model.publishedDate | date:'yyyy-MM-dd' "
+                    (ngModelChange)="model.publishedDate =$event" hidden>
+            </div>
+
+            <div class="mt-3">
+                <label for="author" class="form-label">Tác giả</label>
+                <!-- <input type="text" id="author" name="author" class="form-control" [(ngModel)]="model.author"> -->
+
+                <input type="text" class="form-control" formControlName="author"
+                    [ngClass]="{ 'is-invalid': (submitted || f['author'].touched ||f['author'].dirty) && f['author'].errors }"
+                    (blur)="onFieldTouched('author')" [(ngModel)]="model.author">
+
+                @if ((submitted || f['author'].touched ||f['author'].dirty) && f['author'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['author'].errors['required']) {
+                    <div>Tác giả là bắt buộc</div>
+                    }
+                    @if (f['author'].errors['minlength']) {
+                    <div>Tác giả không được bé hơn 4 ký tự</div>
+                    }
+                    @if (f['author'].errors['maxlength']) {
+                    <div>Tác giả không được lớn hơn 50 ký tự</div>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="isVisible" [(ngModel)]="model.isVisible"
+                formControlName="isVisible">
+            <label class="form-check-label" for="isVisible">
+                Công khai?
+            </label>
+        </div>
+
+        <div class="mt-3">
+            <label for="categories" class="form-label">Thể loại</label>
+            <ng-container *ngIf="categories$ | async as categories">
+                <select class="form-control" [(ngModel)]="model.categories" formControlName="categories" id="categories"
+                    multiple [ngClass]="{ 'is-invalid': submitted  && f['categories'].errors }"
+                    [(ngModel)]="model.categories">
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+
+                </select>
+                @if (submitted && f['categories'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['author'].errors['required']) {
+                    <div>Chưa có thể loại nào được chọn</div>
+                    }
+
+                </div>
+                }
+            </ng-container>
+
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>
+
+<div class="images-container-modal" [ngClass]="{'d-block': isImageSelectorVisible,'d-none':!isImageSelectorVisible}">
+    <button type="button" class="btn btn-light" style="position: fixed; top: 50px; right: 10px;"
+        (click)="closeImageSelector()">X</button>
+    <app-image-selector></app-image-selector>
+</div>
